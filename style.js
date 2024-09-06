@@ -4,18 +4,18 @@ const inputValue = document.querySelector(".addInput");
 const searchInput = document.querySelector(".searchInput");
 renderProduct();
 
-btnSearch.addEventListener("click", () => {
-  const searchValue = searchInput.value;
+searchInput.addEventListener("input", () => {
+  const searchValues = searchInput.value;
 
   let dataValue = JSON.parse(localStorage.getItem("listData")) || [];
 
   const searchFilter = dataValue.filter((item) => {
-    return item.task.toLowerCase().includes(searchValue.toLowerCase());
+    return item.task.toLowerCase().includes(searchValues.toLowerCase());
   });
 
   let htmlResult = "";
 
-  searchFilter.forEach((element) => {
+  searchFilter.map((element) => {
     htmlResult += `
                   <tr>
                       <td>${element.task}</td>
@@ -28,7 +28,33 @@ btnSearch.addEventListener("click", () => {
   });
 
   document.querySelector("#tbProduct").innerHTML = htmlResult;
-});
+})
+
+// btnSearch.addEventListener("click", () => {
+//   const searchValue = searchInput.value;
+
+//   let dataValue = JSON.parse(localStorage.getItem("listData")) || [];
+
+//   const searchFilter = dataValue.filter((item) => {
+//     return item.task.toLowerCase().includes(searchValue.toLowerCase());
+//   });
+
+//   let htmlResult = "";
+
+//   searchFilter.forEach((element) => {
+//     htmlResult += `
+//                   <tr>
+//                       <td>${element.task}</td>
+//                       <td>
+//                           <button onclick="handleEdit('${element.id}')">Edit</button>
+//                           <button onclick="handleDelete('${element.id}')">Delete</button>
+//                       </td>
+//                   </tr>
+//               `;
+//   });
+
+//   document.querySelector("#tbProduct").innerHTML = htmlResult;
+// });
 
 btnAdd.addEventListener("click", () => {
   if (!inputValue.value) {
@@ -64,7 +90,7 @@ function renderProduct() {
 
   let htmlResult = "";
 
-  dataValue.forEach((element) => {
+  dataValue.map((element) => {
     htmlResult += `
             <tr>
                 <td>${element.task}</td>
